@@ -1,0 +1,125 @@
+html {
+  background-color: #202020;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+body {
+  width: 100%;
+  height: 100%;
+  font-family: Times New Roman, serif;
+}
+
+p {
+  font-family: Times New Roman, serif;
+  font-size: 20px;
+  line-height: 22px;
+}
+
+a, a:visited {
+  color: #aaa;
+}
+
+a:hover {
+  color: #ddd;
+  text-decoration: underline;
+}
+
+.tile {
+  height: 180px;
+  float: left;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  border: 1px #202020 solid;
+  opacity: 0.8;
+}
+
+.tile:hover {
+  opacity: 1;
+}
+
+.time-strip {
+  width: 100%;
+  position: absolute;
+  top: 180px;
+  z-index: 2;
+  pointer-events: none;
+}
+
+#date {
+  text-align: center;
+  font-size: 25px;
+  color: #fff;
+}
+
+#time, #time-ap {
+  text-align: center;
+  font-size: 180px;
+  color: #fff;
+}
+
+#time-ap {
+  font-size: 90px;
+}
+
+#lightbox-template {
+  display: none;
+}
+
+#lightbox-bg {
+  display: none;
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background-color: #000;
+  opacity: 0.8;
+  z-index: 4;
+}
+
+.lightbox {
+  position: absolute;
+  margin: 20px auto;
+  z-index: 5;
+  display: none;
+}
+
+.image-panel {
+  float: left;
+  margin-right: 10px;
+  background-color: #000;
+}
+
+.text-panel {
+  font-family: helvetica, arial, sans-serif;
+  color: #aaa;
+  float: right;
+  width: 200px;
+}
+
+.text-panel .title {
+  font-size: 20px;
+  line-height: 22px;
+  margin-top: 10px;
+}
+
+.title a {
+  text-decoration: none;
+}
+
+.text-panel .username {
+  font-size: 12px;
+  line-height: 14px;
+  color: #ddd;
+  margin-top: 5px;
+}
+
+.text-panel .description {
+  font-size: 14px;
+  line-height: 16px;
+  margin-top: 10px;
+  overflow: scroll;
+}
+
+
