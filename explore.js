@@ -44,21 +44,20 @@ function tileClick(photoURL, photoID) {
                       api_key: "181747ad9af6cc125a5c7c034463129a",
                       photo_id: photoID
                     };
-  flickrRequest(dataRequest, "info");
+  var flickr = flickrRequest(dataRequest);
+  flickr.done(function(response) {
+    infoCallback(response);
+  });
+  flickr.fail(function(jqXHR, textStatus, errorThrown) {
+    console.log("fail: "+textStatus);
+  });
 };
 
-function flickrRequest(dataRequest, callback) {
-  $.ajax({
+function flickrRequest(dataRequest) {
+  return $.ajax({
     type: "GET",
     url: "http://api.flickr.com/services/rest",
-    data: dataRequest,
-    success: function(successReturn) {
-      if ( callback == "interestingness" ) {
-        intCallback(successReturn);
-      } else {
-        infoCallback(successReturn);
-      };
-    }
+    data: dataRequest
   });
 };
 
@@ -118,7 +117,7 @@ function infoCallback(successReturn) {
   $(".lightbox").css("margin", lbMargin);
 
   $(".text-panel .description").show();
-  $(".text-panel").height(lbHeight).css("overflow", "scroll"); // shows the description panel
+  $(".text-panel").height(lbHeight); // shows the description panel
   
   $(".lightbox").fadeIn(500);
 
@@ -244,7 +243,13 @@ $(document).ready(function() {
                       api_key: "181747ad9af6cc125a5c7c034463129a", 
                       per_page: numTiles
                     };  
-  flickrRequest(dataRequest, "interestingness");
+  var flickr = flickrRequest(dataRequest);
+  flickr.done(function(response) {
+    intCallback(response);
+  });
+  flickr.fail(function(jqXHR, textStatus, errorThrown) {
+    console.log("fail: "+textStatus);
+  });
   perpClock(timeStripHeight);
   perpDate(timeStripHeight);
 });
