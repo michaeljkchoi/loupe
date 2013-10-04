@@ -3,7 +3,6 @@
   "version": "1.0",
   "manifest_version": 2,
 
-  "default_locale": "en",
   "description": "Replaces the new tab page with a showcase of Flickr's most interesting photos of the day",
   "icons": { "16": "/assets/images/icon16.png",
              "48": "/assets/images/icon48.png",
@@ -11,6 +10,5 @@
            },
   "chrome_url_overrides": {
     "newtab": "index.html"
-  },
-  "content_security_policy": "script-src 'self' https://*.500px.com; object-src 'self'"
+  }
 }
