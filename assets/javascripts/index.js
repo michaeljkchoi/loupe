@@ -96,17 +96,16 @@ function intCallback(successReturn) {
 
 function infoCallback(successReturn) {
   jsonReturn = xmlToJson(successReturn);
-  var info = jsonReturn.rsp.photo;
-  console.log(info);
-  var title = info.title["#text"];
-  var description = info.description["#text"];
-  var username = info.owner["@attributes"].username;
-  var realname = info.owner["@attributes"].realname;
-  var url = info.urls.url["#text"];
-  var views = info["@attributes"].views;
+  var info = jsonReturn["rsp"]["photo"];
+  var title = info["title"]["#text"];
+  var description = info["description"]["#text"];
+  var username = info["owner"]["@attributes"]["username"];
+  var realname = info["owner"]["@attributes"]["realname"];
+  var url = info["urls"]["url"]["#text"];
+  var views = info["@attributes"]["views"];
   
-  $(".text-panel .title").html(title).wrapInner("<a href=" + url + ">");
-  $(".text-panel .username").html(username);
+  $(".text-panel .title").text(title).wrapInner("<a href=" + url + ">");
+  $(".text-panel .username").text(username);
   $(".text-panel .description").html(description).hide(); 
   // hides the description until the 
   // lightbox height has been calculated
