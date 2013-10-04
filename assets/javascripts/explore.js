@@ -107,8 +107,10 @@ function infoCallback(successReturn) {
   
   $(".text-panel .title").html(title).wrapInner("<a href=" + url + ">");
   $(".text-panel .username").html(username);
-  $(".text-panel .description").html(description).hide(); // hides the description until the 
-                                                          // lightbox height has been calculated
+  $(".text-panel .description").html(description).hide(); 
+  // hides the description until the 
+  // lightbox height has been calculated
+  
   var lbWidth = $(".lightbox").width();
   var lbHeight = $(".lightbox").height();
   var lrMargin = ($(window).width()-lbWidth)/2; // left right margin

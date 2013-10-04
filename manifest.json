@@ -1,8 +1,14 @@
 {
-  "name": "explore",
+  "name": "Loupe",
   "version": "1.0",
   "manifest_version": 2,
+
+  "default_locale": "en",
   "description": "Replaces the new tab page with a showcase of Flickr's most interesting photos of the day",
+  "icons": { "16": "/assets/images/icon16.png",
+             "48": "/assets/images/icon48.png",
+             "128": "/assets/images/icon128.png"
+           },
   "chrome_url_overrides": {
     "newtab": "index.html"
   },
