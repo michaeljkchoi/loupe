@@ -96,6 +96,7 @@ a:hover {
   color: #aaa;
   float: right;
   width: 200px;
+  overflow: hidden;
 }
 
 .text-panel .title {

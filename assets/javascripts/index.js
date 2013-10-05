@@ -70,15 +70,15 @@ function intCallback(successReturn) {
   photos = jsonReturn.rsp.photos.photo;
   photos.forEach(function(photo) {
     var photoThumbURL = "http://farm" + 
-                        photo["@attributes"].farm + ".staticflickr.com/" + 
-                        photo["@attributes"].server + "/" + 
-                        photo["@attributes"].id + "_" + 
-                        photo["@attributes"].secret + "_m.jpg";
+                        photo["@attributes"]["farm"] + ".staticflickr.com/" + 
+                        photo["@attributes"]["server"] + "/" + 
+                        photo["@attributes"]["id"] + "_" + 
+                        photo["@attributes"]["secret"] + "_m.jpg";
     var photoURL = "http://farm" + 
-                   photo["@attributes"].farm + ".staticflickr.com/" + 
-                   photo["@attributes"].server + "/" + 
-                   photo["@attributes"].id + "_" + 
-                   photo["@attributes"].secret + ".jpg";
+                   photo["@attributes"]["farm"] + ".staticflickr.com/" + 
+                   photo["@attributes"]["server"] + "/" + 
+                   photo["@attributes"]["id"] + "_" + 
+                   photo["@attributes"]["secret"] + ".jpg";
 
     $(".tile").first().clone().appendTo("body");
     $(".tile").last().css("background-image", "url(" + photoThumbURL + ")")
