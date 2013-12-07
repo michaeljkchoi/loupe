@@ -33,7 +33,19 @@ function xmlToJson(xml) {
     }
   }
   return obj;
-};
+}
+
+function shuffle(source) {
+  // Fisher-Yates-Durstenfeld shuffle
+  // http://stackoverflow.com/a/3718452/1459488
+  for ( var n = 0; n < source.length - 1; n++ ) {
+    var k = n + Math.floor( Math.random() * ( source.length - n ));
+    var temp = source[k];
+    source[k] = source[n];
+    source[n] = temp;
+  }
+  return source
+}
 
 function tileClick(photoURL, photoID) {
   $("#lightbox-bg").fadeIn(500);
@@ -51,7 +63,7 @@ function tileClick(photoURL, photoID) {
   flickr.fail(function(jqXHR, textStatus, errorThrown) {
     console.log("fail: "+textStatus);
   });
-};
+}
 
 function flickrRequest(dataRequest) {
   return $.ajax({
@@ -59,15 +71,11 @@ function flickrRequest(dataRequest) {
     url: "http://api.flickr.com/services/rest",
     data: dataRequest
   });
-};
-
-function randomizeJson(json) {
-  
 }
 
 function intCallback(successReturn) {
   jsonReturn = xmlToJson(successReturn);
-  photos = jsonReturn.rsp.photos.photo;
+  photos = shuffle(jsonReturn.rsp.photos.photo);
   photos.forEach(function(photo) {
     var photoThumbURL = "http://farm" + 
                         photo["@attributes"]["farm"] + ".staticflickr.com/" + 
@@ -92,7 +100,7 @@ function intCallback(successReturn) {
     var photoID = $(this).attr("data-photo-id");
     tileClick(photoURL, photoID);
   });
-};
+}
 
 function infoCallback(successReturn) {
   jsonReturn = xmlToJson(successReturn);
@@ -134,7 +142,7 @@ function infoCallback(successReturn) {
       $(".lightbox").remove();
     }
   });
-};
+}
 
 function perpDate() { // perpetually checks and displays the system date
   var today = new Date();
@@ -176,12 +184,9 @@ function perpDate() { // perpetually checks and displays the system date
     perpDate()
   }, 500);
 
-};
+}
 
-function perpClock(timeStripHeight) { // perpetually checks and displays the system time
-  $("#time").css("font-size", timeStripHeight/2);
-  $("#time-ap").css("font-size", timeStripHeight/3);
-  
+function perpClock() { // perpetually checks and displays the system time
   var today = new Date();
   var hour = today.getHours();
   var minute = today.getMinutes();
@@ -198,59 +203,54 @@ function perpClock(timeStripHeight) { // perpetually checks and displays the sys
   minute = checkTime(minute);
   second = checkTime(second);
 
-  $("#time").html( hour + ":" + minute + ":" + second + "<span id='time-ap'> " + ap + "</span>");
+  $("#time").html(hour + ":" + minute + ":" + second + "<span id='time-ap'> " + ap + "</span>");
 
   t = setTimeout(function() {
     perpClock()
   }, 500);
-};
+}
 
-function checkTime(i) { // adds "0" in front of single digit numbers (e.g. 7 => 07, 19 => 19) and changes 0 to 12.
-  if (i == 0) {
+function checkTime(i) { 
+  // adds "0" in front of single digit numbers (e.g. 7 => 07, 19 => 19) and changes 0 to 12.
+  if ( i == 0 ) {
     i = 12;
   } else if ( i < 10 ) {
     i = "0" + i;
   }
   return i;
-};
+}
+
+function dynamicTileHeight() {
+  // Sets the height of the tile equal to the width.
+  // The width of the tile is goverened by Bootstrap grid.
+  var tileDimension = $(".tile").first().width();
+  var timeHeight = (tileDimension * 0.8);
+  var dateHeight = (tileDimension * 0.2);
+  $(".tile").height(tileDimension);
+  $(".time-strip").css("margin-top", tileDimension * 2);
+  $("#time").height(timeHeight).css("font-size", timeHeight);
+  $("#date").height(dateHeight).css("font-size", dateHeight);
+}
 
 $(document).ready(function() {
-  var pageWidth = $(window).width();
-  var pageHeight = $(window).height();
-  var tileBorderWidth = 1;
-
-  var targetTileWidth = 150;
-  if ( (pageWidth/targetTileWidth) < 5 ) {
-    var numCols = 10;
-  } else {
-    var numCols = Math.floor(pageWidth/targetTileWidth);
-  }
-  var tileWidth = pageWidth/numCols-2*tileBorderWidth;
-  var tileHeight = tileWidth;
-
-  if ( (pageHeight%tileHeight) == 0 ) {
-    var numRows = pageHeight/tileHeight;
-  } else {
-    var numRows = Math.floor(pageHeight/tileHeight) + 1;
-  };
-  var numTiles = numCols*numRows;
-  var timeStripHeight = tileHeight*2;
-
   $(".tile").first().hide();
-  $(".tile").width(tileWidth).height(tileWidth);
-  $(".time-strip").css("top", tileHeight);
+  dynamicTileHeight();
+  perpClock();
+  perpDate();
+  
+  var whichPage = Math.floor( ( Math.random() * 5 ) + 1 );
 
   var dataRequest = { method: "flickr.interestingness.getList", 
-                      api_key: "181747ad9af6cc125a5c7c034463129a", 
-                      per_page: numTiles
+                      api_key: "181747ad9af6cc125a5c7c034463129a",
+                      per_page: 96,
+                      page: whichPage
                     };  
   var flickr = flickrRequest(dataRequest);
+
   flickr.done(function(response) {
     intCallback(response);
   });
   flickr.fail(function(jqXHR, textStatus, errorThrown) {
     console.log("fail: "+textStatus);
   });
-  perpClock(timeStripHeight);
-  perpDate(timeStripHeight);
 });
