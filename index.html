@@ -1,21 +1,35 @@
 <!DOCTYPE html/>
 <html>
   <head>
-    <title>New Tab</title>
-    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/bootstrap.min.css"/>
-    <link rel="stylesheet" type="text/css" href="/assets/stylesheets/index.css"/>
-    <script src="/assets/javascripts/jquery.min.js"></script>
-    <script src="/assets/javascripts/index.js"></script>
+    <title>Loupe</title>
+    <link rel='stylesheet' type='text/css' href='/assets/stylesheets/bootstrap.min.css'/>
+    <link rel='stylesheet' type='text/css' href='/assets/stylesheets/index.css'/>
+    <script src='/assets/javascripts/jquery.min.js'></script>
+    <script src='/assets/javascripts/index.js'></script>
   </head>
   <body>
-    <div class="time-strip">
-      <div id="time">
-        <span id="time-ap"></span>
+    <div class='time-strip'>
+      <div id='time'>
+        <span id='time-ap'></span>
       </div>
-      <div id="date"></div>
+      <div id='date'></div>
     </div>
-    <div class="tile col-lg-1"></div>
-    <div class="lightbox">
+
+    <div class='tile col-sm-1'></div>
+
+    <div id='lightbox'>
+      <div id='lightbox-container'>
+        <div id='left-panel'>
+          <img id='lightbox-image' class='img-responsive img-rounded'/>
+        </div>
+        <div id='right-panel'>
+          <a href='' id='title' target='_blank'></a>
+          <br/>
+          <a href='' id='username' target='_blank'></a>
+          <br/>
+          <div id='description'></div>
+        </div>
+      </div>
     </div>
   </body>
 </html>

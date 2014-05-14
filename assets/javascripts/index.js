@@ -6,10 +6,10 @@ function xmlToJson(xml) {
   if (xml.nodeType == 1) { // element
     // do attributes
     if (xml.attributes.length > 0) {
-    obj["@attributes"] = {};
+    obj['@attributes'] = {};
       for (var j = 0; j < xml.attributes.length; j++) {
         var attribute = xml.attributes.item(j);
-        obj["@attributes"][attribute.nodeName] = attribute.nodeValue;
+        obj['@attributes'][attribute.nodeName] = attribute.nodeValue;
       }
     }
   } else if (xml.nodeType == 3) { // text
@@ -20,10 +20,10 @@ function xmlToJson(xml) {
     for(var i = 0; i < xml.childNodes.length; i++) {
       var item = xml.childNodes.item(i);
       var nodeName = item.nodeName;
-      if (typeof(obj[nodeName]) == "undefined") {
+      if (typeof(obj[nodeName]) == 'undefined') {
         obj[nodeName] = xmlToJson(item);
       } else {
-        if (typeof(obj[nodeName].push) == "undefined") {
+        if (typeof(obj[nodeName].push) == 'undefined') {
           var old = obj[nodeName];
           obj[nodeName] = [];
           obj[nodeName].push(old);
@@ -48,12 +48,13 @@ function shuffle(source) {
 }
 
 function tileClick(photoURL, photoID) {
-  $("#lightbox-bg").fadeIn(500);
-  $("body").append("<div class=lightbox/>");
-  $(".lightbox").html($("#lightbox-template").html());
-  $(".image-panel").attr("src", photoURL);
-  var dataRequest = { method: "flickr.photos.getInfo", 
-                      api_key: "181747ad9af6cc125a5c7c034463129a",
+  $('#lightbox').fadeIn(500);
+  $('#lightbox-image').attr({
+    'src': photoURL,
+    'max-height': $(window).height()*0.8
+  });
+  var dataRequest = { method: 'flickr.photos.getInfo', 
+                      api_key: '181747ad9af6cc125a5c7c034463129a',
                       photo_id: photoID
                     };
   var flickr = flickrRequest(dataRequest);
@@ -61,14 +62,14 @@ function tileClick(photoURL, photoID) {
     infoCallback(response);
   });
   flickr.fail(function(jqXHR, textStatus, errorThrown) {
-    console.log("fail: "+textStatus);
+    console.log('fail: '+textStatus);
   });
 }
 
 function flickrRequest(dataRequest) {
   return $.ajax({
-    type: "GET",
-    url: "http://api.flickr.com/services/rest",
+    type: 'GET',
+    url: 'http://api.flickr.com/services/rest',
     data: dataRequest
   });
 }
@@ -77,16 +78,18 @@ function intCallback(successReturn) {
   jsonReturn = xmlToJson(successReturn);
   photos = shuffle(jsonReturn.rsp.photos.photo);
   photos.forEach(function(photo) {
-    var photoThumbURL = "http://farm" + 
-                        photo["@attributes"]["farm"] + ".staticflickr.com/" + 
-                        photo["@attributes"]["server"] + "/" + 
-                        photo["@attributes"]["id"] + "_" + 
-                        photo["@attributes"]["secret"] + "_m.jpg";
-    var photoURL = "http://farm" + 
-                   photo["@attributes"]["farm"] + ".staticflickr.com/" + 
-                   photo["@attributes"]["server"] + "/" + 
-                   photo["@attributes"]["id"] + "_" + 
-                   photo["@attributes"]["secret"] + ".jpg";
+    var photoThumbURL = 
+      "http://farm" + 
+      photo["@attributes"]["farm"] + ".staticflickr.com/" + 
+      photo["@attributes"]["server"] + "/" + 
+      photo["@attributes"]["id"] + "_" + 
+      photo["@attributes"]["secret"] + "_m.jpg";
+    var photoURL = 
+      "http://farm" + 
+      photo["@attributes"]["farm"] + ".staticflickr.com/" + 
+      photo["@attributes"]["server"] + "/" + 
+      photo["@attributes"]["id"] + "_" + 
+      photo["@attributes"]["secret"] + "_b.jpg";
 
     $(".tile").first().clone().appendTo("body");
     $(".tile").last().css("background-image", "url(" + photoThumbURL + ")")
@@ -96,8 +99,8 @@ function intCallback(successReturn) {
     $(".tile").last().fadeIn(500);
   });
   $(".tile").click(function(){
-    var photoURL = $(this).attr("data-url");
-    var photoID = $(this).attr("data-photo-id");
+    var photoURL = $(this).data('url');
+    var photoID = $(this).data('photo-id');
     tileClick(photoURL, photoID);
   });
 }
@@ -112,34 +115,20 @@ function infoCallback(successReturn) {
   var url = info["urls"]["url"]["#text"];
   var views = info["@attributes"]["views"];
   
-  $(".text-panel .title").text(title).wrapInner("<a href=" + url + ">");
-  $(".text-panel .username").text(username);
-  $(".text-panel .description").html(description).hide(); 
-  // hides the description until the 
-  // lightbox height has been calculated
+  $('#title').html('').attr('href', url).html(title);
+  $('#username').html('').html(username);
+  $('#description').html('').html(description);
   
-  var lbWidth = $(".lightbox").width();
-  var lbHeight = $(".lightbox").height();
-  var lrMargin = ($(window).width()-lbWidth)/2; // left right margin
-  var tbMargin = ($(window).height()-lbHeight)/2; // top bottom margin
-  var lbMargin = tbMargin + " " + lrMargin; // lightbox shorthand css margins
-  $(".lightbox").css("margin", lbMargin);
+  $('#lightbox').fadeIn(500);
 
-  $(".text-panel .description").show();
-  $(".text-panel").height(lbHeight); // shows the description panel
-  
-  $(".lightbox").fadeIn(500);
-
-  $("#lightbox-bg").click(function(){
-    $("#lightbox-bg").hide();
-    $(".lightbox").remove();
+  $('#lightbox').click(function(){
+    $('#lightbox').hide();
   });
 
   $(window).keyup(function(){
     var keypress = event.keyCode;
     if ( keypress == 27 ) {
-      $("#lightbox-bg").hide();
-      $(".lightbox").remove();
+      $('#lightbox').hide();
     }
   });
 }
@@ -212,20 +201,18 @@ function perpClock() { // perpetually checks and displays the system time
 
 function checkTime(i) { 
   // adds "0" in front of single digit numbers (e.g. 7 => 07, 19 => 19) and changes 0 to 12.
-  if ( i == 0 ) {
-    i = 12;
-  } else if ( i < 10 ) {
-    i = "0" + i;
-  }
+  if ( i == 0 ) { i = 12; } 
+  else if ( i < 10 ) { i = "0" + i; }
   return i;
 }
 
 function dynamicTileHeight() {
   // Sets the height of the tile equal to the width.
   // The width of the tile is goverened by Bootstrap grid.
-  var tileDimension = $(".tile").first().width();
+  var tileDimension = $('.tile').first().width();
   var timeHeight = (tileDimension * 0.8);
   var dateHeight = (tileDimension * 0.2);
+
   $(".tile").height(tileDimension);
   $(".time-strip").css("margin-top", tileDimension * 2);
   $("#time").height(timeHeight).css("font-size", timeHeight);
@@ -234,6 +221,8 @@ function dynamicTileHeight() {
 
 $(document).ready(function() {
   $(".tile").first().hide();
+  $('#lightbox').hide();
+
   dynamicTileHeight();
   perpClock();
   perpDate();
