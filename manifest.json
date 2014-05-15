@@ -1,5 +1,6 @@
 {
-  "name": "Loupe",
+  "name": "Loupe (Flickr Explore)",
+  "short_name": "Loupe",
   "version": "2.1",
   "manifest_version": 2,
 

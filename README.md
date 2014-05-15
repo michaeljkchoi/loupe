@@ -4,4 +4,4 @@ Loupe is a Chrome extension that replaces the new tabs page.  Loupe will showcas
 
 Development
 -----------
-Version 1.0 has been deployed to the Chrome app store.  [Try it!](https://chrome.google.com/webstore/detail/loupe/cklcbmdhngbbedacjmlleeilnkkgcngp)
+Version 2.1 has been deployed to the Chrome app store.  [Try it!](https://chrome.google.com/webstore/detail/loupe/cklcbmdhngbbedacjmlleeilnkkgcngp)
