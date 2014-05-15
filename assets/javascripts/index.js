@@ -214,7 +214,7 @@ function dynamicTileHeight() {
   var dateHeight = (tileDimension * 0.2);
 
   $(".tile").height(tileDimension);
-  $(".time-strip").css("margin-top", tileDimension * 2);
+  $(".time-strip").css("margin-top", tileDimension);
   $("#time").height(timeHeight).css("font-size", timeHeight);
   $("#date").height(dateHeight).css("font-size", dateHeight);
 }

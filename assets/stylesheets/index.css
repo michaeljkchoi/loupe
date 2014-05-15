@@ -89,16 +89,17 @@ a:hover {
 }
 
 #title {
-  font-size: 20px;
+  font-size: 32px;
   font-weight: 700;
   line-height: 1;
 }
 
 #username {
+  font-size: 18px;
 }
 
 #description {
   padding-top: 20px;
-  font-size: 12px;
+  font-size: 18px;
   text-align: justify;
 }
