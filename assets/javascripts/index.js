@@ -69,7 +69,7 @@ function tileClick(photoURL, photoID) {
 function flickrRequest(dataRequest) {
   return $.ajax({
     type: 'GET',
-    url: 'http://api.flickr.com/services/rest',
+    url: 'https://api.flickr.com/services/rest',
     data: dataRequest
   });
 }
